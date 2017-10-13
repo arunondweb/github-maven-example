@@ -1,11 +1,11 @@
 node{
           stage('Build props'){
-              echo "Application repository[ +$repo+ ]"
-              echo "Branch[ +$branchName+ ]"
+              echo "Application repository "
+              echo "Branch"
           }
           stage('checkout started'){
             try{
-                checkout([\$class: 'GitSCM', branches: [[name: '*/$branchName']], doGenerateSubmoduleConfigurations: false, extensions: [[\$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'e8e00b8c-4a34-4c5e-a068-6fd1c490439d', url: "$gitURL"]]])
+                checkout scm
                 echo 'Checkout Completed Successfully'
               }
               catch(x){
