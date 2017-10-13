@@ -3,16 +3,7 @@ node{
               echo "Application repository "
               echo "Branch"
           }
-          stage('checkout started'){
-            try{
-                checkout scm
-                echo 'Checkout Completed Successfully'
-              }
-              catch(x){
-                currentBuild.result = 'failed'
-                throw x
-              }  
-          } 
+          
           stage('maven build started') {
             try{
                  sh "ls -l"
