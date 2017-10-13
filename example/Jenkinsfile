@@ -1,0 +1,77 @@
+node{
+          stage('Build props'){
+              echo "Application repository[ +$repo+ ]"
+              echo "Branch[ +$branchName+ ]"
+          }
+          stage('checkout started'){
+            try{
+                checkout([\$class: 'GitSCM', branches: [[name: '*/$branchName']], doGenerateSubmoduleConfigurations: false, extensions: [[\$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'e8e00b8c-4a34-4c5e-a068-6fd1c490439d', url: "$gitURL"]]])
+                echo 'Checkout Completed Successfully'
+              }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }  
+          } 
+          stage('maven build started') {
+            try{
+                 sh "ls -l"
+                 /* Call mvn cmd here*/
+                 echo 'Maven-build Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }   
+          } 
+          stage('Sonarqube analysis started') {
+            try{
+                 /* Call sonar qube cmd*/
+                 echo 'sonarqube analysis Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }  
+          }
+          stage('Unit testing started') {
+            try{
+                 /* Call unit testing*/
+                 echo 'unit testing Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }
+      }
+              stage('Deployment to Dev') {
+            try{
+                 //Call build job here
+                 echo 'Deployment to Dev Environment Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }
+      }
+               stage('Deployment to Staging') {
+            try{
+                 //Call build job here
+                 echo 'Deployment to Staging Environment Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }
+      }
+              stage('Deployment to Prod') {
+            try{
+                 //Call build job here
+                 echo 'Deployment to Prod Environment Completed Successfully'
+                }
+              catch(x){
+                currentBuild.result = 'failed'
+                throw x
+              }
+          }
+        }
